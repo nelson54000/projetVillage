@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Immobilier à vendre dans le village{% endblock %}
+
+{% block body %}
+
+<div class="jumbotron">
+    <h1 class="display-4">Gestion des biens à vendre dans le village:</h1>
+    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+        featured
+        content or information.</p>
+    <hr class="my-4">
+    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+
+</div>
+
+{% for message in app.flashes('success') %}
+<div class="alert alert-success">
+{{ message }}
+</div>
+{% endfor %}
+
+<br>
+
+<a type="button" class="btn btn-primary" href="{{path('AdminCreateRealEstate')}}">Ajouter un nouveau bien</a>
+
+<br>
+<br>
+
+<div class="container">
+
+    <div class="row flex">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nom du bien</th>
+                    <th scope="col">Vendu Oui/Non</th>
+                    <th scope="col">Btn Editer</th>
+                    <th scope="col">Btn supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for property in getAllRealEstate  %}
+
+                <tr>
+                    <th scope="row">{{ property.id}}</th>
+                    <td>{{ property.title }}</td>
+                    <td>{{ property.sold }}</td>
+                    <td><a type="button" class="btn btn-primary"
+                            href="{{ path('AdminEditRealEstate', {id: property.id})}}">Editer</a></td>
+                    <td>
+                        <a type="button" class="btn btn-danger"
+                        href="{{ path('AdminDeleteRealEstate', {id: property.id})}}"
+                        >Supprimer</a>
+                        <!-- onsubmit="return confirm('Etes vous sur de vouloir supprimer ce bien')" -->
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+# Attention l'indentation du code doit etre respecté, sinon les routes ne fonctionne pas.
+
+index:
+   path: /
+   controller: App\Controller\AccueilController::index
+
+
+PropertyIndex:
+   path: /RealEstate/PropertyIndex
+   controller: App\Controller\PropertyController::index
+
+
+# {slug} - {id}
+PropertyShow:
+   path: "/RealEstate/propertyShow {id}"
+   controller: App\Controller\PropertyController::propertyAtShow
+
+
+AdminRealEstateIndex:
+   path: /Admin/AdminRealEstate/AdminRealEstateIndex
+   # le dernier c'est le nom du fichier du controlleur
+   controller: App\Controller\Admin\AdminPropertyController::index
+
+AdminEditRealEstate:
+   path: "/Admin/AdminRealEstate/EditRealEstate {id}"
+   # le dernier c'est le nom du fichier du controlleur
+   controller: App\Controller\Admin\AdminPropertyController::edit
+
+
+AdminCreateRealEstate:
+   path: /Admin/AdminRealEstate/CreateRealEstate
+   controller: App\Controller\Admin\AdminPropertyController::create
+ 
+
+AdminDeleteRealEstate:
+   # path: "/Admin/AdminRealEstate/DeleteRealEstate {id}"
+   path: "/Delete/ {id}"
+   controller: App\Controller\Admin\AdminPropertyController::delete
+
+
+
+

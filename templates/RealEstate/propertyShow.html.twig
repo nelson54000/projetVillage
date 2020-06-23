@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ propertyAtShow.title }}{% endblock %}
+
+
+{% block body %}
+<div class="jumbotron">
+    <!-- style="font-size: 80%;" -->
+    <div class="row">
+        <div class="col-md-5">
+            <h1 class="display-4">{{ propertyAtShow.title }}</h1>
+        </div>
+        <div class="col-md-7">
+            <p class="pt-2" style="font-size: 230%;">{{ propertyAtShow.price | number_format(0, '', ' ')}} Euro</p>
+        </div>
+    </div>
+    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+        featured content or information.</p>
+    <hr class="my-4">
+    <h5>Description du bien:</h5>
+    <br>
+    <p>{{ propertyAtShow.description }}</p>
+</div>
+
+<br>
+
+<div class="row">
+
+    <div class="col-md-5">
+        <h5>Caractéristique du bien:</h5>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Caractéristiques</th>
+                    <th scope="col">nb</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Surface habitable du bien:</td>
+                    <td>{{ propertyAtShow.surface }} m2</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Nombre d'étages:</td>
+                    <td>{{ propertyAtShow.floor }} étages</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Nombre de piéces:</td>
+                    <td>{{ propertyAtShow.rooms }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Nombre de chambres:</td>
+                    <td>{{ propertyAtShow.bedrooms }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Type de chauffage:</td>
+                    <td>{{ propertyAtShow.HeatType }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-7">
+        <h5>Photos du bien:</h5>
+
+
+
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <h5>Localisation du bien:</h5>
+
+
+
+    </div>
+</div>
+
+{% endblock %}

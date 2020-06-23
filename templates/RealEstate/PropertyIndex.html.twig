@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Immobilier à vendre dans le village{% endblock %}
+
+{% block body %}
+
+<div class="jumbotron">
+  <h1 class="display-4">Liste des biens à vendre dans le village:</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured
+    content or information.</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+
+<h3>Rechercher le bien qui vous convient</h3>
+
+<br>
+
+{{ form_start(form) }}
+
+<p>Surface minimum:</p>
+{{ form_row(form.minSurface) }}
+
+<p>Prix maximum:</p>
+{{ form_row(form.maxPrice) }}
+
+{{ form_rest(form) }}
+<br>
+<button type="submit" class="btn btn-primary">Rechercher</button>
+{{ form_end(form) }}
+
+</div>
+
+<br><br>
+
+<div class="container">
+  <h2>Les derniers biens à vendre dans le village:</h2>
+
+  <br><br>
+  <div class="row flex">
+    {% for property in properties  %}
+    <div class="col-3 ml-4">
+
+      <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="card-body">
+          <!-- ,{id: properto.id, slug: properto.slug } -->
+          <h5 class="card-title"><a href="{{ path('PropertyShow', {id: property.id})}}">{{ property.title }}</a> </h5>
+          <p class="card-text"> {{ property.surface }} m2 - {{ property.city }} ({{ property.postalCode }})</p>
+          <p class="card-text">{{ property.description }}</p>
+          <div class="text-primary" style="font-size: 150%;">{{ property.price | number_format(0, '', ' ')}} euro</div>
+        </div>
+      </div>
+    </div>
+
+      {% endfor %}
+
+  </div>
+
+  <br><br>
+
+  <div class="navigation  centrer">
+    {{ knp_pagination_render(properties) }}
+  </div>
+
+
+</div>
+
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

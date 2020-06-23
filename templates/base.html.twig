@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Welcome!{% endblock %}</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  {% block stylesheets %}
+  <style>
+    .flexColumn {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .flexRow {
+      display: flex;
+      flex-direction: row;
+    }
+
+
+    .underMenuContainerInside {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .underMenuContainer {
+      display: none;
+      position: absolute;
+      background-color: wheat;
+      border-radius: 0px 0px 10px 10px;
+    }
+
+
+    .underLink {
+      padding: 10px;
+
+    }
+
+
+    /* *******************************Style Menu************************** */
+
+    #nav {
+      height: 60px;
+      width: 100%;
+      z-index: 5;
+
+      /* essai pour menu retractable */
+      transition: height 0.3s;
+
+      /* se sont ces 2 codes qui rendent le menu visible tout le temps: */
+      /* les désactive si on veux annuller cette spécifiscité */
+      position: fixed;
+      top: 0;
+    }
+
+    #containerMenu {
+      position: relative;
+      height: 40px;
+      background-color: #c3c3b4d0;
+      /* code pour faire fonctionner la couleur sur edge: */
+      background-color: rgb(159, 159, 147);
+    }
+
+    #menu {
+      /* c'est ce code qui permet de mettre les lien du menue au niveau du container principale à droite et a gauche */
+      position: absolute;
+      list-style-type: none;
+      justify-content: space-between;
+      background-color: #c3c3b4d0;
+
+      /* code pour faire fonctionner la couleur sur edge: */
+      background-color: rgb(159, 159, 147);
+    }
+
+    /* .menuLeft {}
+
+        .menuRight {} */
+
+    .menu a {
+      color: black;
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      padding-top: 8px;
+    }
+
+    #underContainerMenuLeft {
+      display: block
+    }
+
+    .menu a:hover {
+      background-color: #555;
+      color: white;
+    }
+  </style>
+  {% endblock %}
+
+
+</head>
+
+<body>
+  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <a class="navbar-brand" href="{{path('index')}}">Accueil</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+      aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link {% if current_menu is defined and current_menu == 'properties'%} active {% endif %}"
+            href="{{path('PropertyIndex')}}">Immobillier<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('newsDuVillage')}}">News Du Village</a>
+
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('AdminRealEstateIndex')}} ">Admin Immobillier</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('app_login')}} ">Se connecter</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('Inscription')}} ">S'inscrire</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="linkMenuM06" href="#">Menu Administration</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav> -->
+
+  <nav id="containerMenu">
+    <!--  -->
+    <div class="menu flexRow flexWrap " id="menu">
+      <!-- -->
+
+      <div class=" lienMenu menuLeft flexRow " id="menuLeft">
+
+        <div id="underContainerMenuLeft">
+          <div class="flexRow">
+            <a href="{{path('index')}}" class="menuLinkleft">Accueil</a>
+            <a href="{{path('PropertyIndex')}}" class="menuLinkleft aToTake " id="linkMenuM01">Immobillier</a>
+            <a href="{{path('newsDuVillage')}}" class="menuLinkleft aToTake" id="linkMenuM02">Les News du Village</a>
+            <a href="#" class="menuLinkleft  aToTake" id="linkMenuM03">lien3</a>
+            <a href="#" class="menuLinkleft  aToTake" id="linkMenuM04">lien4</a>
+            <a href="#" class="menuLinkleft  aToTake" id="linkMenuM05">lien5</a>
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <div class="menuRight flexRow flexWrap" id="menuRight">
+        <a href="#" class="menuLinkRight" id="linkMenuAccount">MonCompte</a>
+      </div>
+      <div class="menuRight flexRow flexWrap" id="menuRight">
+        <a href="#" class="menuLinkRight" id="linkMenuAdmin">Administration</a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ************************Gestion sous Menu ******************* -->
+
+  <!-- ************Sous Menu administration -->
+  <div class="underMenuContainer" id="underMenuAccount">
+    <div id="underMenu" class="underMenuContainerInside">
+      <div class="underLink">
+        <a href="{{path('app_login')}}" id="underLink41" class="aDisplayOpacity">Se connecter</a>
+      </div>
+      <div class="underLink">
+        <a href="{{path('Inscription')}}" id="underLink42" class="aDisplayOpacity">S'inscrire</a>
+      </div>
+      <div class="underLink">
+        <a href="destroySession.php" class="aDisplayOpacity">Se Déconnecter</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- **********Sous Menu "Mon compte" -->
+  <div class="underMenuContainer" id="underMenuAdmin">
+    <div class="underMenuContainerInside">
+      <div class="underLink">
+        <a href="{{path('AdminRealEstateIndex')}}" class="aDisplayOpacity">Administration Immobillier</a>
+      </div>
+      <div class="underLink">
+        <a href="{{path('AdminRealEstateIndex')}}" class="aDisplayOpacity">Administration Utilisateurs</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- *************************************************************************** -->
+
+  <div class="container">
+    {% block body %}{% endblock %}
+  </div>
+
+
+  {% block javascripts %}
+
+  <script>
+    // ******************Gestion menu déroulant administration:
+
+    var menu = document.getElementById('menu')
+
+    var linkMenuAccount = document.getElementById('linkMenuAccount')
+    var linkMenuAdmin = document.getElementById('linkMenuAdmin')
+
+    // *******Récup sous Menu:
+
+    var underMenuAccount = document.getElementById('underMenuAccount')
+    var underMenuAdmin = document.getElementById('underMenuAdmin')
+
+    console.log(underMenuAdmin.offsetLeft)
+
+
+    manageUnderMenu(underMenuAccount, linkMenuAccount)
+    manageUnderMenu(underMenuAdmin, linkMenuAdmin)
+
+
+    function manageUnderMenu(affichage06, linkMenuM06) {
+
+      linkMenuM06.addEventListener("mouseover", function () {
+        console.log('coucou')
+        affichage06.style.display = "block"
+        affichage06.style.left = linkMenuM06.offsetLeft + "px"
+      })
+
+      affichage06.addEventListener("mouseover", function () {
+        console.log('sort du menu')
+        affichage06.style.display = "block"
+        affichage06.style.left = linkMenuM06.offsetLeft + "px"
+      })
+
+      linkMenuM06.addEventListener("mouseout", function () {
+        affichage06.style.display = "none"
+      })
+
+      affichage06.addEventListener("mouseout", function () {
+        affichage06.style.display = "none"
+      })
+    }
+    //  ****************************************************************
+
+  </script>
+  {% endblock %}
+
+
+
+</body>
+
+</html>

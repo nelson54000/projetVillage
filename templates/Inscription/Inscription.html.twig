@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription!{% endblock %}
+
+
+
+{% block body %}
+<div class="jumbotron">
+
+    <div class="row">
+        <div class="col-md-5">
+            <h1 class="display-4">Formulaire d'inscription</h1>
+        </div>
+        <div class="col-md-7">
+            <p class="pt-2" style="font-size: 230%;">Inscrivé vous pour effectuer toutes vos démarche en ligne en un clic.</p>
+        </div>
+    </div>
+</div>
+
+{{ form_start(form) }}
+
+      {{ form_rest(form) }}
+      <br>
+      <button type="submit" class="btn btn-primary">Valider votre inscription</button>
+
+{{ form_end(form) }}
+
+{% endblock %}

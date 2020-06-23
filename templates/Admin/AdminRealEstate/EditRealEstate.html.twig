@@ -1,0 +1,49 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ propertyAtShow.title }}{% endblock %}
+
+
+{% block body %}
+<div class="jumbotron">
+    <!-- style="font-size: 80%;" -->
+    <div class="row">
+        <div class="col-md-5">
+            <h1 class="display-4">{{ propertyAtShow.title }}</h1>
+        </div>
+        <div class="col-md-7">
+            <p class="pt-2" style="font-size: 230%;">{{ propertyAtShow.price | number_format(0, '', ' ')}} Euro</p>
+        </div>
+    </div>
+</div>
+
+
+{{ form_start(form) }}
+
+<div class="row">
+<div class="col-md-4">{{ form_row(form.title)  }}</div>
+<div class="col-md-4">{{ form_row(form.surface)  }}</div>
+<div class="col-md-4">{{ form_row(form.price)  }}</div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">{{ form_row(form.rooms)  }}</div>   
+    <div class="col-md-2">{{ form_row(form.bedrooms)  }}</div> 
+    <div class="col-md-2">{{ form_row(form.heat)  }}</div> 
+    <div class="col-md-2">{{ form_row(form.floor)  }}</div> 
+</div>
+<br>
+<h4>Localisation:</h4>
+<div class="row">    
+    <div class="col-md-2">{{ form_row(form.adress)  }}</div> 
+    <div class="col-md-2">{{ form_row(form.city)  }}</div> 
+    <div class="col-md-2">{{ form_row(form.postal_code)  }}</div> 
+    <div class="col-md-2">{{ form_row(form.sold)  }}</div> 
+</div>
+      {{ form_rest(form) }}
+      <br>
+      <button type="submit" class="btn btn-secondary">Editer</button>
+{{ form_end(form) }}
+
+{% endblock %}
+
