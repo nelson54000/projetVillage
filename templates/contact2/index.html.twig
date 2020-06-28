@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact2 index{% endblock %}
+
+{% block body %}
+<div class="jumbotron" style="width: 102.8%; left: -1.3%; position: relative;">
+
+  <h1 class="display-4">Messages:</h1>
+
+  <hr class="my-4">
+  </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contact2 in contact2s %}
+            <tr>
+                <td>{{ contact2.id }}</td>
+                <td>{{ contact2.firstname }}</td>
+                <td>{{ contact2.lastname }}</td>
+                <td>{{ contact2.phone }}</td>
+                <td>{{ contact2.email }}</td>
+                <td>{{ contact2.message }}</td>
+                <td>
+                    <a href="{{ path('contact2_show', {'id': contact2.id}) }}">show</a>
+                    <a href="{{ path('contact2_edit', {'id': contact2.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

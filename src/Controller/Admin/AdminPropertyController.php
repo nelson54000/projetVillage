@@ -8,7 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Property;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjetManager;
-
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AdminPropertyController extends AbstractController
 {
@@ -29,7 +31,7 @@ class AdminPropertyController extends AbstractController
     {
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
-        
+
 
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,42 +53,70 @@ class AdminPropertyController extends AbstractController
     }
 
 
-public function create(Request $request){
+    public function create(Request $request)
+    {
 
-    // on récupérer l'entité et on l'enregistre dans la var $propertyCreate
-$propertyCreate = new Property();
-//on utilise la methode createForm sur l'entité récupéré
-$form2 = $this->createForm(PropertyType::class, $propertyCreate );
-$form2->handleRequest($request);
+        // on récupérer l'entité et on l'enregistre dans la var $propertyCreate
+        $propertyCreate = new Property();
+        //on utilise la methode createForm sur l'entité récupéré
+        $form2 = $this->createForm(PropertyType::class, $propertyCreate);
+        $form2->handleRequest($request);
 
-if ($form2->isSubmitted() && $form2->isValid()) {
+        if ($form2->isSubmitted() && $form2->isValid()) {
 
-    $em = $this->getDoctrine()->getManager();
-    $em->persist($propertyCreate);
-    $em->flush();
-    $this->addFlash('success', 'Bien crée avec succès');
-    // Dans redirectToRoute on doit mettre le nom de la route
-    return $this->redirectToRoute('AdminRealEstateIndex');
-}
-return $this->render('Admin/AdminRealEstate/CreateRealEstate.html.twig', [
-    'controller_name' => 'AdminPropertyController',
-    // 'propertyAtShow' => $PropertyAtShow,
-    'form' => $form2->createView(),
-]);
+            $imageFile = $form2->get('imageFile')->getData();
 
-}
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                // $safeFilename = $slugger->slug($originalFilename);
+                $safeFilename = $originalFilename;
 
-// , Request $request
-public function delete(Property $property){
-    $em = $this->getDoctrine()->getManager();
-    $em->remove($property);
-    $em->flush();
-    $this->addFlash('success', 'Bien supprimé avec succès');
-//  if ($this->isCsrfTokenValid('delete'. $property->getId(), $request->get('_token') )) {
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
 
-//  }
-    return $this->redirectToRoute('AdminRealEstateIndex');
-}
+                // dump('coucou');
+                // Move the file to the directory where brochures are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('img_upload_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
 
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+// dd($newFilename);
+                $propertyCreate->setImageFile($newFilename);
+                $propertyCreate->setFilename($newFilename);
+            }
 
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($propertyCreate);
+            $em->flush();
+            $this->addFlash('success', 'Bien crée avec succès');
+
+            // Dans redirectToRoute on doit mettre le nom de la route
+            return $this->redirectToRoute('AdminRealEstateIndex');
+        }
+        return $this->render('Admin/AdminRealEstate/CreateRealEstate.html.twig', [
+            'controller_name' => 'AdminPropertyController',
+            // 'propertyAtShow' => $PropertyAtShow,
+            'form' => $form2->createView(),
+        ]);
+    }
+
+    // , Request $request
+    public function delete(Property $property)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($property);
+        $em->flush();
+        $this->addFlash('success', 'Bien supprimé avec succès');
+        //  if ($this->isCsrfTokenValid('delete'. $property->getId(), $request->get('_token') )) {
+
+        //  }
+        return $this->redirectToRoute('AdminRealEstateIndex');
+    }
 }

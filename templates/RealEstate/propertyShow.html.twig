@@ -3,9 +3,77 @@
 {% block title %}{{ propertyAtShow.title }}{% endblock %}
 
 
+{% block stylesheets %}
+
+<style>
+    /* *******************Style carousel****************** */
+
+    .containerCarousel {
+        width: 100%;
+        /* margin: auto; */
+        height: 350px;
+        /* text-align: center; */
+        /* ******************pour test  */
+        position: relative;
+        /* ****************** */
+    }
+
+    .imgCarousel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: width 0.3s;
+    }
+
+    .imgCarousel.active {
+        opacity: 1;
+    }
+
+    .prevBtnCarousel,
+    .nextBtnCarousel {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        margin-top: -22px;
+        padding: 16px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+    }
+
+    .nextBtnCarousel {
+        right: 0;
+        border-top-left-radius: 50%;
+        border-bottom-left-radius: 50%;
+    }
+
+    .prevBtnCarousel {
+        left: 0;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+    }
+
+    .prevBtnCarousel:hover,
+    .nextBtnCarousel:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    /* ********************************* */
+</style>
+
+{% endblock %}
+
+
+
 {% block body %}
-<div class="jumbotron">
-    <!-- style="font-size: 80%;" -->
+<div class="jumbotron" style="width: 102.8%; left: -1.3%; position: relative;">
     <div class="row">
         <div class="col-md-5">
             <h1 class="display-4">{{ propertyAtShow.title }}</h1>
@@ -14,8 +82,6 @@
             <p class="pt-2" style="font-size: 230%;">{{ propertyAtShow.price | number_format(0, '', ' ')}} Euro</p>
         </div>
     </div>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-        featured content or information.</p>
     <hr class="my-4">
     <h5>Description du bien:</h5>
     <br>
@@ -70,7 +136,37 @@
     <div class="col-md-7">
         <h5>Photos du bien:</h5>
 
+        <!--*********************************************** Carousel: -->
 
+        <div id="containerCarousel" class="containerCarousel">
+
+            
+            <!--slider-wrapper  -->
+            <!-- Si le bien n'a pas de lien filename enregistré dans la bdd, alors prndre l'image par défautl:-->
+            {% if propertyAtShow.filename == null %}
+
+            <div class="imgCarousel">
+                <img src="{{ asset('uploads/properties_img/5522558784596.png') }}" alt=""
+                    style="height: 100%; width: 100%;">
+            </div>
+
+            {% endif %}
+            <!-- Si le bien a un lien filename enregistré dans la bdd:-->
+            {% if propertyAtShow.filename != null %}
+
+            <div class="imgCarousel">
+                <img src="{{ asset('uploads/properties_img/' ~ property.filename) }}" alt=""
+                    style="height: 100%; width: 100%;">
+            </div>
+            {% endif %}
+            
+            <!-- </div> -->
+            <a class="prevBtnCarousel">&#10094;</a>
+            <a class="nextBtnCarousel">&#10095;</a>
+        </div>
+
+        <!-- Fin Carousel: -->
+        <!--***********************************************fin Carousel: -->
 
     </div>
 
@@ -85,5 +181,120 @@
 
     </div>
 </div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script>
+
+
+    //********************************************Code carousel*********************************************************
+    //******************************************************************************************************
+
+    var containerCarousel = document.getElementById('containerCarousel')
+
+    var prevBtnCarousel = document.querySelector('.prevBtnCarousel');
+    var nextBtnCarousel = document.querySelector('.nextBtnCarousel');
+
+    var imgCarousel = document.querySelectorAll('.imgCarousel');
+    var nbImgCarousel = imgCarousel.length;
+    var counter = 0;
+
+    imgCarousel[counter].classList.add('active');
+
+    prevBtnCarousel.addEventListener('click', function () {
+        imgCarouselPre()
+    });
+
+
+    ic = 1;
+    while (ic < imgCarousel.length) {
+        imgCarousel[ic].style.transition = "width 0.0s"
+        imgCarousel[ic].style.width = "60%";
+        ic++
+    }
+
+
+    function imgCarouselPre() {
+        // on enleve la classe active a l'image affiché en cours
+        imgCarousel[counter].classList.remove('active');
+
+        imgCarousel[counter].style.transition = "width 0.0s"
+        imgCarousel[counter].style.width = "60%";
+
+        // le compteur recule d'un
+        counter--;
+
+        // permet le sens inverse quand on est sur la "1er img" (1er div du containerCarousel)) 
+        //et donc d'afficher la "dernier" img (derniére div du containerCarousel)) 
+        if (counter < 0) {
+            counter = nbImgCarousel - 1;
+        }
+
+
+        imgCarousel[counter].style.transition = "width 0.3s"
+        imgCarousel[counter].style.width = "100%";
+
+        // on met la classe active a dont le compteur à maintenant le numéro
+        imgCarousel[counter].classList.add('active');
+    }
+
+
+    nextBtnCarousel.addEventListener('click', function () {
+        imgCarouselNext()
+    });
+
+
+    function imgCarouselNext() {
+        imgCarousel[counter].style.transition = "width 0.0s"
+        imgCarousel[counter].style.width = "60%";
+
+        // on enleve la classe active a l'image affiché en cours
+        imgCarousel[counter].classList.remove('active');
+        // console.log(counter + "  num ancienne img active")
+
+
+        // le compteur ajoute un, (pour donner le numero de l'image suivante au compteur)
+        counter++;
+        // console.log(counter + "  num nouvelle img active")
+
+        // permet de revenir au début quand la derniere img est afficher on appuyant sur next
+        if (counter >= nbImgCarousel) {
+            counter = 0;
+        }
+
+        imgCarousel[counter].style.transition = "width 0.3s"
+        imgCarousel[counter].style.width = "100%";
+
+        // on met la classe active a dont le compteur à maintenant le numéro
+        imgCarousel[counter].classList.add('active');
+    }
+
+
+    // attention: pour chancher la duré, ne pas oublier de changer aux 2 endroit
+    var scrollAutomaticCarousel = setInterval(() => {
+        imgCarouselNext()
+        // 1er endroit:
+    }, 10000);
+
+
+    containerCarousel.addEventListener("mouseout", function () {
+        // console.log("je sort")
+        // 2éme endroit:
+        scrollAutomaticCarousel = setInterval(imgCarouselNext, 10000)
+    });
+
+
+    containerCarousel.addEventListener("mouseover", function () {
+        // console.log("je rentre")
+        clearInterval(scrollAutomaticCarousel)
+    });
+
+
+// *************************************************************************
+
+</script>
 
 {% endblock %}

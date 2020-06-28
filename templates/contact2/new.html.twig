@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Contact2{% endblock %}
+
+{% block body %}
+<div class="jumbotron" style="width: 102.8%; left: -1.3%; position: relative;">
+
+    <div class="row">
+        <div class="col-md-5">
+            <h1 class="display-4">Contacter la mairie</h1>
+        </div>
+        <div class="col-md-7">
+            <p class="pt-2" style="font-size: 230%;">Contacté nous pour effectuer vos démarche en ligne.</p>
+        </div>
+    </div>
+</div>
+
+    {{ include('contact2/_form.html.twig') }}
+
+    <a href="{{ path('contact2_index') }}">back to list</a>
+{% endblock %}

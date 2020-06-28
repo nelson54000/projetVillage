@@ -6,8 +6,34 @@
   <title>{% block title %}Welcome!{% endblock %}</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  {% block stylesheets %}
+
+
   <style>
+    /* ************************************************ */
+
+    body {
+      background-color: white;
+      z-index: 0;
+      position: relative;
+    }
+
+    /* container principal (qui fait les marges) */
+    #styleContainer {
+      /* top: -10px; */
+      position: relative;
+      /* margin-left: 10%;
+      margin-right: 10%; */
+      border-left-style: groove;
+      border-right-style: groove;
+      border-color: white;
+      border-width: 4px;
+      box-shadow: 1px 1px 45px #555;
+      background-color: rgb(238, 229, 212);
+      padding-bottom: 100px;
+    }
+
+    /* ************************************************** */
+
     .flexColumn {
       display: flex;
       flex-direction: column;
@@ -19,6 +45,10 @@
     }
 
 
+    /* *******************************Style Menu************************** */
+
+    /* *******************Sous menu: */
+
     .underMenuContainerInside {
       display: flex;
       flex-direction: column;
@@ -27,18 +57,23 @@
     .underMenuContainer {
       display: none;
       position: absolute;
-      background-color: wheat;
+      /* background-color: wheat; */
+      background-color: rgb(230, 230, 230);
       border-radius: 0px 0px 10px 10px;
-    }
+      z-index: 5;
+      text-decoration: none;
+      border: 1px solid;
+      border-top-style: hidden;
 
+      border-color: black;
+    }
 
     .underLink {
       padding: 10px;
-
     }
 
+    /* ****************************************** */
 
-    /* *******************************Style Menu************************** */
 
     #nav {
       height: 60px;
@@ -71,11 +106,10 @@
 
       /* code pour faire fonctionner la couleur sur edge: */
       background-color: rgb(159, 159, 147);
+      z-index: 5;
+      /* padding-left:19% ; */
+
     }
-
-    /* .menuLeft {}
-
-        .menuRight {} */
 
     .menu a {
       color: black;
@@ -93,61 +127,135 @@
       background-color: #555;
       color: white;
     }
+
+    /* *************************Image au dessus du menu: */
+
+    .linearGradient {
+      position: absolute;
+      z-index: 2;
+      height: 100px;
+      width: 100%;
+    }
+
+    #imgBelowMenu {
+      position: relative;
+    }
+
+    #degradeAboveMenu {
+      position: absolute;
+      z-index: 2;
+      height: 100px;
+      width: 100%;
+      bottom: 0px;
+      background: linear-gradient(to top, rgb(159, 159, 147) 10%, rgba(0, 0, 255, 0));
+    }
+
+    /* *******************************Style footer****************************** */
+
+    footer {
+      position: relative;
+      height: 440px;
+      width: 100%;
+      /* background-color: #c3c3b4d0; */
+
+      /* code pour faire fonctionner la couleur sur edge: */
+      background-color: rgb(159, 159, 147);
+      bottom: 0%;
+      text-align: center;
+      /* list-style-type: none; */
+      list-style: none;
+    }
+
+
+    .barHightAndLowFooter {
+      position: relative;
+      background-color: rgb(228, 217, 188);
+      /* height: 20%; */
+      width: 100%;
+    }
+
+    #barFooterHight {
+      height: 12%;
+    }
+
+    #barFooterLow {
+      height: 12%;
+    }
+
+    #degradeFooterJonction {
+      bottom: 0px;
+      background: linear-gradient(to top, rgb(44, 46, 51) 10%, rgba(0, 0, 255, 0));
+    }
+
+    .degradeFooter {
+      position: absolute;
+      z-index: 2;
+      height: 20px;
+      width: 100%;
+    }
+
+    #degradeFooter1 {
+      bottom: 0px;
+      background: linear-gradient(to top, black 10%, rgba(0, 0, 255, 0));
+    }
+
+    .degradeFooter2 {
+      top: 0px;
+      background: linear-gradient(to bottom, rgb(44, 46, 51) 10%, rgba(0, 0, 255, 0));
+
+    }
+
+    #middleFooter {
+      width: 100%;
+      height: 80%;
+      /* ColorMiddleFooter */
+      background-color: rgb(158, 158, 146);
+    }
+
+    .middleFooterSection {
+      height: 100%;
+      width: 33.33333%;
+      border-width: 1px;
+      border-right-style: solid;
+      border-color: black;
+    }
+
+    #middleFooterSection3 {
+      border-style: hidden;
+    }
+
+    .midlleFooterHightAnLow {
+      width: 100%;
+      height: 10%;
+    }
+
+    #sectionContactFooter {
+      background-color: rgb(228, 217, 218);
+      width: 20%;
+      height: 100%;
+      position: relative;
+    }
   </style>
+
+  {% block stylesheets %}
   {% endblock %}
 
 
 </head>
 
+
 <body>
-  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-    <a class="navbar-brand" href="{{path('index')}}">Accueil</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
-      aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarColor02">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link {% if current_menu is defined and current_menu == 'properties'%} active {% endif %}"
-            href="{{path('PropertyIndex')}}">Immobillier<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{path('newsDuVillage')}}">News Du Village</a>
-
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{path('AdminRealEstateIndex')}} ">Admin Immobillier</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{path('app_login')}} ">Se connecter</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{path('Inscription')}} ">S'inscrire</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="linkMenuM06" href="#">Menu Administration</a>
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
+  <div style="width: 100%; height: 250px;" id="imgBelowMenu">
+    <div style="width: 100%; height: 100%;">
+      <img src="{{ asset('img_presentation_village/728x341-place-du-village-concours-jardin.jpg') }}" alt=""
+        style="width: 100%; height: 100%;">
     </div>
-  </nav> -->
+    <div id="degradeAboveMenu" class="linearGradient"></div>
+  </div>
 
   <nav id="containerMenu">
-    <!--  -->
+
     <div class="menu flexRow flexWrap " id="menu">
-      <!-- -->
 
       <div class=" lienMenu menuLeft flexRow " id="menuLeft">
 
@@ -155,27 +263,26 @@
           <div class="flexRow">
             <a href="{{path('index')}}" class="menuLinkleft">Accueil</a>
             <a href="{{path('PropertyIndex')}}" class="menuLinkleft aToTake " id="linkMenuM01">Immobillier</a>
-            <a href="{{path('newsDuVillage')}}" class="menuLinkleft aToTake" id="linkMenuM02">Les News du Village</a>
-            <a href="#" class="menuLinkleft  aToTake" id="linkMenuM03">lien3</a>
-            <a href="#" class="menuLinkleft  aToTake" id="linkMenuM04">lien4</a>
-            <a href="#" class="menuLinkleft  aToTake" id="linkMenuM05">lien5</a>
+            <a href="{{path('pageDisplayNews')}}" class="menuLinkleft aToTake" id="linkMenuM02">Les News du Village</a>
+            <a href="{{path('contact2_new')}}" class="menuLinkleft  aToTake" id="linkMenuM05">Contact</a>
           </div>
         </div>
       </div>
-      <!--  -->
+
       <div class="menuRight flexRow flexWrap" id="menuRight">
         <a href="#" class="menuLinkRight" id="linkMenuAccount">MonCompte</a>
       </div>
       <div class="menuRight flexRow flexWrap" id="menuRight">
         <a href="#" class="menuLinkRight" id="linkMenuAdmin">Administration</a>
       </div>
+      
     </div>
   </nav>
 
 
   <!-- ************************Gestion sous Menu ******************* -->
 
-  <!-- ************Sous Menu administration -->
+    <!-- **********Sous Menu "Mon compte" -->
   <div class="underMenuContainer" id="underMenuAccount">
     <div id="underMenu" class="underMenuContainerInside">
       <div class="underLink">
@@ -189,27 +296,98 @@
       </div>
     </div>
   </div>
-
-  <!-- **********Sous Menu "Mon compte" -->
+ 
+  <!-- ************Sous Menu administration -->
   <div class="underMenuContainer" id="underMenuAdmin">
     <div class="underMenuContainerInside">
       <div class="underLink">
         <a href="{{path('AdminRealEstateIndex')}}" class="aDisplayOpacity">Administration Immobillier</a>
       </div>
       <div class="underLink">
-        <a href="{{path('AdminRealEstateIndex')}}" class="aDisplayOpacity">Administration Utilisateurs</a>
+        <a href="{{path('user_index')}}" class="aDisplayOpacity">Administration Utilisateurs</a>
+      </div>
+      <div class="underLink">
+        <a href="{{path('article_index')}}" class="aDisplayOpacity">Gestion des Articles</a>
+      </div>
+      <div class="underLink">
+        <a href="{{path('contact2_index')}}" class="aDisplayOpacity">Consulter les messages</a>
       </div>
     </div>
   </div>
 
   <!-- *************************************************************************** -->
 
-  <div class="container">
-    {% block body %}{% endblock %}
+  <div class="container styleContainer" id="styleContainer">
+
+    {% block body %}
+    {% endblock %}
   </div>
 
+  <Footer>
+    <div class="flexColumn" style="width: 100%; height: 100%;">
+      <div id="barFooterHight" class="barHightAndLowFooter">
+        <div>
+          <p style="font-size: 150%;">ChateauEnSalin.com</p>
+        </div>
+        <div id="degradeFooter1" class="degradeFooter"></div>
+      </div>
+      <div id="middleFooter" class="flexColumn">
+        <div class="flexRow" style="width: 100%; height: 100%;">
+          <div id="containerMiddleFooterContent" style="width: 100%; height: 100%;">
+            <div class="midlleFooterHightAnLow"></div>
+            <div id="middleFooterContent" class="flexRow" style="width: 100%; height: 80%;">
+              <div id="middleFooterSection1" class="middleFooterSection">
+                <h6>Section Du Site</h6>
+                <ul>
+                  <li>Accueil</li>
+                  <li>Découverte</li>
+                  <li>Photo</li>
+                  <li>Videos</li>
+                  <li>Article</li>
+                </ul>
+              </div>
+              <div id="middleFooterSection2" class="middleFooterSection">
+                <h6>Articles les plus visités</h6>
 
-  {% block javascripts %}
+
+              </div>
+              <div id="middleFooterSection3" class="middleFooterSection">
+                <h6>Nouveautés</h6>
+                <p>À ne pas manquer</p>
+
+              </div>
+            </div>
+            <div class="midlleFooterHightAnLow"></div>
+          </div>
+          <div id="sectionContactFooter">
+            <!-- <div class="degradeFooter2 degradeFooter"></div> -->
+
+            <ul>
+              <li>Contact</li>
+              <li>Cookies</li>
+              <li>A propos du site</li>
+              <li>A propos de l'auteur</li>
+              <li>CV de l'auteur</li>
+            </ul>
+
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <div id="barFooterLow" class="barHightAndLowFooter">
+        <!-- id remplace par class id="degradeFooter2" -->
+        <div class="degradeFooter2 degradeFooter"></div>
+        <div>
+          <br>
+          <p>Copyright © 2020 ChateauEnSalin.com. Tous droits réservés.</p>
+        </div>
+      </div>
+    </div>
+
+  </Footer>
+
+
+  
 
   <script>
     // ******************Gestion menu déroulant administration:
@@ -218,6 +396,8 @@
 
     var linkMenuAccount = document.getElementById('linkMenuAccount')
     var linkMenuAdmin = document.getElementById('linkMenuAdmin')
+
+    container = document.getElementById("styleContainer")
 
     // *******Récup sous Menu:
 
@@ -236,13 +416,13 @@
       linkMenuM06.addEventListener("mouseover", function () {
         console.log('coucou')
         affichage06.style.display = "block"
-        affichage06.style.left = linkMenuM06.offsetLeft + "px"
+        affichage06.style.left = linkMenuM06.offsetLeft + container.offsetLeft + "px"
       })
-
+ 
       affichage06.addEventListener("mouseover", function () {
         console.log('sort du menu')
         affichage06.style.display = "block"
-        affichage06.style.left = linkMenuM06.offsetLeft + "px"
+        affichage06.style.left = linkMenuM06.offsetLeft + container.offsetLeft + "px"
       })
 
       linkMenuM06.addEventListener("mouseout", function () {
@@ -253,9 +433,32 @@
         affichage06.style.display = "none"
       })
     }
-    //  ****************************************************************
+    
+
+    // *************Positionement des lien menu au meme niveau que le container principal (de chaque cotés, droite et gauche) ****************************
+
+    menu = document.getElementById("menu")
+    
+  
+    // ces codes positionnent les lien du menu a la meme distance du bord que le container principal au lancement de la page 
+    menu.style.left = container.offsetLeft + "px"
+    // menu.style.right = container.offsetLeft + "px"
+
+    // console.log(container.offsetLeft + "px" +"     container.offsetLeft")
+
+    window.addEventListener("resize", function() {
+
+        // ces codes positionnent les lien du menu a la meme distance du bord que le container principal en direct quand la page est rezize
+        menu.style.left = container.offsetLeft + "px"
+        // menu.style.right = container.offsetLeft + "px"
+
+        // console.log(barWitnessWidth.offsetLeft + "px" +"     barWitnessWidth.offsetLeft")
+        // console.log(container.offsetLeft + "px" +"     container.offsetLeft")
+    });
 
   </script>
+  
+{% block javascripts %}
   {% endblock %}
 
 

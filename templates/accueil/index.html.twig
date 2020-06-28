@@ -1,20 +1,186 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccueilController!{% endblock %}
+{% block title %}Accueil Chateau en Salin!{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .example-wrapper {
+        margin: 1em auto;
+        max-width: 800px;
+        width: 95%;
+        font: 18px/1.5 sans-serif;
+    }
+
+    .example-wrapper code {
+        background: #F5F5F5;
+        padding: 2px 6px;
+    }
+
+
+    /* *********************Section Article:******************************* */
+
+
+    .containerSectionArticle {
+
+        padding-right: 15%;
+        padding-left: 15%;
+    }
+
+
+    /* **************************Design Article */
+    /* Tous les block code de cette section servent a créer le design qui entoure les article */
+    /* dans la section des dernier article publié */
+    /* ou quand l'user fait une recherche*/
+
+    /* 1er container de l'article */
+    .articlePublie {
+        width: 100%;
+        height: 650px;
+        background-color: white;
+        border-radius: 10px 10px 10px 10px;
+        border: 1px solid;
+        border-color: rgb(195, 195, 195);
+        /* c'est ce code qui gére la distance entre le 1er et le 2émé container de l'article*/
+        padding: 3%;
+        /* c'est ce code qui met la distance entre 2 articles: */
+        margin-bottom: 30px;
+    }
+
+    /* c'est le 2éme container de l'article, juste apres le container "articlePublie" */
+    #containerInArticle {
+        position: relative;
+        width: 100%;
+        height: 97%;
+    }
+
+    #containerImgArticle {
+        position: relative;
+        background-color: sandybrown;
+        width: 100%;
+        height: 47%;
+        border-radius: 10px 10px 0px 0px;
+        border: 1px solid;
+        border-color: rgb(195, 195, 195);
+    }
+
+    #containerTextArticle {
+        position: relative;
+        width: 100%;
+        height: 52%;
+        overflow: hidden;
+        border: 1px solid;
+        border-color: rgb(195, 195, 195);
+        border-radius: 0px 0px 10px 10px;
+        background-color: white;
+    }
+
+    #containerTitleArticle {
+        height: 13%;
+        width: 100%;
+        background-color: rgb(230, 230, 230);
+    }
+
+    #containerTitleArticle h5 {
+        position: absolute;
+        left: 20px;
+        top: 5px;
+    }
+
+    #textArticle {
+        overflow: hidden;
+        width: 100%;
+        height: 75%;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    #containerTagArticle {
+        padding-top: 7px;
+        padding-left: 15px;
+        width: 100%;
+        height: 7%;
+    }
+
+    #containerBtnReadNextArticle {
+        width: 100%;
+        height: 6%;
+    }
+
+
+    #btnReadNextArticle {
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+    }
+</style>
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<!-- example-wrapper -->
+<div class="containerSectionArticle">
 
-<div class="example-wrapper">
-    <h1>Hello bienvenue a l'acceuil</h1>
+    <br><br>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/projetPerso/symphony/projet1/src/Controller/AccueilController.php'|file_link(0) }}">src/Controller/AccueilController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/projetPerso/symphony/projet1/templates/accueil/index.html.twig'|file_link(0) }}">templates/accueil/index.html.twig</a></code></li>
-    </ul>
+    <h3>Bienvenue sur le site de la commune de Chateau En Salin.</h1>
+
+<br><br>
+
+    <div id="sitePresentation">
+
+        <p>Grace à ce site vous pouvez consulter les dérniéres actualités de la commune, faire vos
+            démarches administratives en ligne, et découvrir notre commune et son patrimoine.</p>
+
+        <p>Et grace à un partenarie exclusif avec l'agent immobilier et le notaire de la commune
+            vous pouvais meme consulter les biens à vendre dans le village.</p>
+
+    </div>
+
+    <br><br>
+
+    <h4>Les derniéres news de la commune:</h4>
+
+    <br><br>
+
+    {% for article in getAllArticle  %}
+
+    <article id="articlePublie" class="articlePublie">
+        <div id="containerInArticle">
+            <div id="containerImgArticle">
+                <!-- Si le bien n'a pas de lien filename enregistré dans la bdd, alors prndre l'image par défautl:-->
+                {% if article.adressImgArticle== null %}
+                <img src="{{ asset('img_presentation_village/villages-france-1-domme.jpg') }}" alt=""
+                    style="width: 100%; height: 100%; border-radius: 10px 10px 0px 0px;">
+                {% endif %}
+                <!-- Si le bien a un lien filename enregistré dans la bdd:-->
+                {% if article.adressImgArticle != null %}
+                <img src="" alt="" style="width: 100%; height: 100%; border-radius: 10px 10px 0px 0px;">
+                {% endif %}
+            </div>
+            <div id="containerTextArticle">
+                <div id="containerTitleArticle">
+                    <h5>{{ article.nameArticle }}</h5>
+                </div>
+                <br>
+                <div id="textArticle">
+                    <p>&nbsp; &nbsp;{{ article.textArticle }}</p>
+                </div>
+                <div id="containerBtnReadNextArticle">
+                    <div id="btnReadNextArticle">
+                        <a href="{{path('article_show', {id: article.id})}}">Lire l'article</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="containerTagArticle">
+            <!-- <p>Tag: </p> -->
+        </div>
+    </article>
+
+    {% endfor %}
+
+    <div class="navigation ">
+        {{ knp_pagination_render(getAllArticle) }}
+      </div>
+
 </div>
 {% endblock %}

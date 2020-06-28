@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+
+<br><br>
+
+<h2>{{ article.nameArticle }}</h2>
+
+<br><br>
+
+<div class="row">
+    <div class="col-md-6">
+        <span>Date de publication: {{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</span>
+    </div>
+
+    <div class="col-md-6">
+        <span>Nom de l'auteur: ChateauEnSalin.com</span>
+    </div>
+</div>
+
+<hr>
+
+ <!-- Si le bien n'a pas de lien filename enregistré dans la bdd, alors prndre l'image par défautl:-->
+ {% if article.adressImgArticle== null %}
+ <img src="{{ asset('img_presentation_village/villages-france-1-domme.jpg') }}" alt=""
+     style="width: 100%; height: 100%; border-radius: 10px 10px 0px 0px;">
+ {% endif %}
+ <!-- Si le bien a un lien filename enregistré dans la bdd:-->
+ {% if article.adressImgArticle != null %}
+ <img src="" alt="" style="width: 100%; height: 100%; border-radius: 10px 10px 0px 0px;">
+ {% endif %}
+
+
+<br><br>
+
+<p>{{ article.textArticle }}</p>
+
+
+<a href="{{ path('article_index') }}">back to list</a>
+
+
+{% endblock %}

@@ -12,8 +12,6 @@ use Twig\Environment;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjetManager;
-use Knp\Component\Pager\Paginator;
-use Knp\Component\Pager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\PropertySearchType;
@@ -39,15 +37,6 @@ class PropertyController extends AbstractController
      *@var ObjetManager
      */
     private $em;
-
-
-
-    //     public function __construct(Environment $twig, PropertyRepository $repository, ObjetManager $em ){
-    //         $this ->twig = $twig;
-    //  $this->repository = $repository;
-    //   $this->em = $em;
-
-    //     }
 
 
     // ***************************récupérer les données méthode2:
